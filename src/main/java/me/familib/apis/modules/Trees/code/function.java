@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.material.Leaves;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -140,7 +142,7 @@ public class function {
                 for(BlockFace face : allFaces){
                     if(!block.getRelative(face).getType().isSolid()){
                         if(face != BlockFace.UP){
-                            if(random.nextDouble() < 0.01){
+                            if(random.nextDouble() < 0.005){
                                 branching(face, block.getRelative(face).getLocation(), calculateHeight(block) / 3, face.getOppositeFace());
                             }
                         }
@@ -174,6 +176,13 @@ public class function {
                                 continue;
                             }
                             newBlock.setType(leaves);
+
+                            BlockState state = newBlock.getState();
+                            Leaves leaves = (Leaves) state.getData();
+                            leaves.setDecayable(false);
+                            leaves.setDecaying(false);
+                            state.setData(leaves);
+                            state.update();
 
                             toAdd.add(newBlock);
                         }
