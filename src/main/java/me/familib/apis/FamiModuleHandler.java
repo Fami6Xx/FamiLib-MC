@@ -31,9 +31,7 @@ public class FamiModuleHandler {
 
         if(optional.get().isEnabled()) return true;
 
-        optional.get().setEnabled(true);
-
-        return true;
+        return optional.get().setEnabled(true);
     }
 
     /**
@@ -52,9 +50,7 @@ public class FamiModuleHandler {
 
         if(!optional.get().isEnabled()) return true;
 
-        optional.get().setEnabled(false);
-
-        return true;
+        return optional.get().setEnabled(false);
     }
 
     /**

@@ -20,10 +20,10 @@ public abstract class AModuleHandler {
     /**
      * Enables/Disables Module
      */
-    public void setEnabled(boolean bool){
+    public boolean setEnabled(boolean bool){
         enabled = bool;
-        if(bool) enable();
-        else disable();
+        if(bool) return enable();
+        else return disable();
     }
 
     /**
