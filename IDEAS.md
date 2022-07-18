@@ -1,5 +1,5 @@
 # INFO
-This is where i story my ideas for next features
+This is where i store my ideas for next features
 
 - As you can see I love hurting myself with creating Algorithms :D
 
