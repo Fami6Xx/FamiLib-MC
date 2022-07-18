@@ -1,9 +1,9 @@
-package me.familib.misc.FamiAPIHandler;
+package me.familib.misc.FamiModuleHandler;
 
 import me.familib.FamiLib;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class ModularAPIHandler {
+public abstract class AModuleHandler {
     private boolean enabled = false;
     public abstract String getName();
     public abstract double getVersion();
@@ -29,17 +29,17 @@ public abstract class ModularAPIHandler {
     /**
      * For turning off and on use setEnabled, these functions are there only for modules!!
      */
-    protected abstract void enable();
+    protected abstract boolean enable();
 
     /**
      * For turning off and on use setEnabled, these functions are there only for modules!!
      */
-    protected abstract void disable();
+    protected abstract boolean disable();
 
     /**
      * Gets Main class
      */
-    public JavaPlugin getPlugin(){
+    public static JavaPlugin getPlugin(){
         return FamiLib.getFamiLib();
     }
 }

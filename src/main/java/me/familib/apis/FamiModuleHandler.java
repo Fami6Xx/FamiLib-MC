@@ -1,25 +1,28 @@
 package me.familib.apis;
 
-import me.familib.misc.FamiAPIHandler.ModularAPIHandler;
+import me.familib.apis.HoloAPI.HoloAPI;
+import me.familib.misc.FamiModuleHandler.AModuleHandler;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class FamiAPIHandler {
-    private final ArrayList<ModularAPIHandler> modules = new ArrayList<>();
+public class FamiModuleHandler {
+    private final ArrayList<AModuleHandler> modules = new ArrayList<>();
 
-    public FamiAPIHandler(){
+    public FamiModuleHandler(){
         // Initialize all modules but don't start them
+
+        modules.add(new HoloAPI());
     }
 
     /**
-     * Tries to find and initialize module
+     * Tries to find and enable module
      *
-     * @param name Name of module you want to initialize
+     * @param name Name of module you want to enable
      * @return true if module was successfully enabled or has already been enabled ,or false if the module can't be initialized or wasn't found
      */
-    public boolean tryInitialize(String name){
-        Optional<ModularAPIHandler> optional =
+    public boolean tryEnabling(String name){
+        Optional<AModuleHandler> optional =
                 modules.stream()
                         .filter(handler -> handler.getName().equals(name))
                         .findFirst();
@@ -40,7 +43,7 @@ public class FamiAPIHandler {
      * @return true if module was successfully disabled or has already been disabled ,or false if module can't be disabled or wasn't found
      */
     public boolean tryDisabling(String name){
-        Optional<ModularAPIHandler> optional =
+        Optional<AModuleHandler> optional =
                 modules.stream()
                         .filter(handler -> handler.getName().equals(name))
                         .findFirst();
@@ -60,8 +63,8 @@ public class FamiAPIHandler {
      * @param name Name of module you want to query
      * @return the module you wanted if it finds one, otherwise null
      */
-    public ModularAPIHandler getModule(String name){
-        Optional<ModularAPIHandler> optional =
+    public AModuleHandler getModule(String name){
+        Optional<AModuleHandler> optional =
                 modules.stream()
                     .filter(handler -> handler.getName().equals(name))
                     .findFirst();
