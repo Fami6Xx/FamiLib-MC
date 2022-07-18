@@ -1,9 +1,9 @@
-package me.familib.apis.HoloAPI;
+package me.familib.apis.modules.HoloAPI;
 
-import me.familib.apis.HoloAPI.handlers.FollowHoloHandler;
-import me.familib.apis.HoloAPI.handlers.VisibilityHoloHandler;
-import me.familib.apis.HoloAPI.types.holograms.FollowingHologram;
-import me.familib.apis.HoloAPI.types.lines.UpdatingLine;
+import me.familib.apis.modules.HoloAPI.handlers.FollowHoloHandler;
+import me.familib.apis.modules.HoloAPI.handlers.VisibilityHoloHandler;
+import me.familib.apis.modules.HoloAPI.types.holograms.FollowingHologram;
+import me.familib.apis.modules.HoloAPI.types.lines.UpdatingLine;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;

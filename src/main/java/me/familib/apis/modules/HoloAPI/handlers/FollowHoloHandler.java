@@ -1,7 +1,7 @@
-package me.familib.apis.HoloAPI.handlers;
+package me.familib.apis.modules.HoloAPI.handlers;
 
 import me.familib.FamiLib;
-import me.familib.apis.HoloAPI.types.holograms.famiHologram;
+import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

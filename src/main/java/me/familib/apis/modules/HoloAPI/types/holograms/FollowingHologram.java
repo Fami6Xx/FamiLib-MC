@@ -1,8 +1,8 @@
-package me.familib.apis.HoloAPI.types.holograms;
+package me.familib.apis.modules.HoloAPI.types.holograms;
 
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.familib.FamiLib;
-import me.familib.apis.HoloAPI.HoloAPI;
+import me.familib.apis.modules.HoloAPI.HoloAPI;
 import me.familib.misc.AExecuteQueue;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

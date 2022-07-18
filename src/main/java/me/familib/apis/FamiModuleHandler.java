@@ -1,6 +1,7 @@
 package me.familib.apis;
 
-import me.familib.apis.HoloAPI.HoloAPI;
+import me.familib.apis.modules.HoloAPI.HoloAPI;
+import me.familib.apis.modules.Trees.Trees;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ public class FamiModuleHandler {
         // Initialize all modules but don't start them
 
         modules.add(new HoloAPI());
+        modules.add(new Trees());
+        tryEnabling("Trees");
     }
 
     public void disableAll(){

@@ -1,6 +1,6 @@
-package me.familib.apis.HoloAPI.handlers;
+package me.familib.apis.modules.HoloAPI.handlers;
 
-import me.familib.apis.HoloAPI.types.holograms.famiHologram;
+import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
 import me.familib.misc.AExecuteQueue;
 import org.bukkit.scheduler.BukkitTask;
 

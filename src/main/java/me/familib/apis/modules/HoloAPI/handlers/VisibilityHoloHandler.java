@@ -1,8 +1,8 @@
-package me.familib.apis.HoloAPI.handlers;
+package me.familib.apis.modules.HoloAPI.handlers;
 
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import me.familib.FamiLib;
-import me.familib.apis.HoloAPI.types.holograms.famiHologram;
+import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
 import me.familib.misc.RayCast.RayCast;
 import me.familib.misc.RayCast.RayCastResult;
 import org.bukkit.Bukkit;

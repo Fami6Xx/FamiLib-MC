@@ -1,8 +1,7 @@
-package me.familib.apis.HoloAPI.types.lines;
+package me.familib.apis.modules.HoloAPI.types.lines;
 
 import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
 import me.familib.FamiLib;
-import me.familib.apis.HoloAPI.HoloAPI;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
