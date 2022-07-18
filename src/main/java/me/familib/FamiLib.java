@@ -15,6 +15,7 @@ public final class FamiLib extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        moduleHandler.disableAll();
     }
 
     public FamiModuleHandler getModuleHandler() {

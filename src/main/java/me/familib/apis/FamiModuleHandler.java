@@ -15,6 +15,13 @@ public class FamiModuleHandler {
         modules.add(new HoloAPI());
     }
 
+    public void disableAll(){
+        modules.forEach(handler -> {
+            if(handler.isEnabled())
+                handler.setEnabled(false);
+        });
+    }
+
     /**
      * Tries to find and enable module
      *
