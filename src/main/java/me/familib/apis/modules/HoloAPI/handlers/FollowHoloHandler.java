@@ -13,6 +13,8 @@ import java.util.*;
 
 public class FollowHoloHandler extends famiHoloHandler {
     public double calculateHeight(UUID uuid){
+        if(Bukkit.getEntity(uuid) == null)
+            return 0;
         double[] height = {Bukkit.getEntity(uuid).getHeight() + 0.5};
 
         getMap().get(uuid).forEach(holo -> height[0] += holo.getHologram().size() * 0.25);

@@ -1,6 +1,6 @@
 package me.familib.apis.modules.Trees.code;
 
-import org.bukkit.Bukkit;
+import me.familib.FamiLib;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -18,31 +18,31 @@ public class command implements CommandExecutor {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    function function = new function(Material.WOOD, Material.LEAVES, loc);
+                    function function = new function(Material.LOG, Material.LEAVES, loc);
                     function.startGrowth();
 
                 }
-            }.runTaskLater(Bukkit.getPluginManager().getPlugin("Trees"), 25);
+            }.runTaskLater(FamiLib.getFamiLib(), 25);
 
         }else{
             try {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        function function = new function(Material.WOOD, Material.LEAVES, loc, Integer.getInteger(args[0]));
+                        function function = new function(Material.LOG, Material.LEAVES, loc, Integer.getInteger(args[0]));
                         function.startGrowth();
 
                     }
-                }.runTaskLater(Bukkit.getPluginManager().getPlugin("Trees"), 25);
+                }.runTaskLater(FamiLib.getFamiLib(), 25);
             }catch (NumberFormatException exc){
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        function function = new function(Material.WOOD, Material.LEAVES, loc);
+                        function function = new function(Material.LOG, Material.LEAVES, loc);
                         function.startGrowth();
 
                     }
-                }.runTaskLater(Bukkit.getPluginManager().getPlugin("Trees"), 25);
+                }.runTaskLater(FamiLib.getFamiLib(), 25);
             }
         }
         return true;

@@ -71,6 +71,9 @@ public class VisibilityHoloHandler extends famiHoloHandler {
                             removeList(holo.getUUID());
                             continue;
                         }
+                        if(holo.getHologram().getLocation() == null){
+                            continue;
+                        }
 
                         if (!holo.getHologram().getVisibilityManager().isVisibleByDefault()) {
                             VisibilityManager manager = holo.getHologram().getVisibilityManager();

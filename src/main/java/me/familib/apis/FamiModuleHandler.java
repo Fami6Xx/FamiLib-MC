@@ -16,6 +16,7 @@ public class FamiModuleHandler {
         modules.add(new HoloAPI());
         modules.add(new Trees());
         tryEnabling("Trees");
+        tryEnabling("HoloAPI");
     }
 
     public void disableAll(){

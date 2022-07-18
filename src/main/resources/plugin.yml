@@ -6,3 +6,6 @@ softdepend: [ ProtocolLib, HolographicDisplays ]
 authors: [ Fami6Xx ]
 description: Library for my (Fami6Xx) current and future plugins
 website: https://github.com/Fami6Xx
+commands:
+  createtree:
+    description: tree
