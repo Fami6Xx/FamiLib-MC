@@ -2,6 +2,7 @@ package me.familib.apis.modules.HoloAPI.handlers;
 
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
+import me.familib.misc.AExecuteQueue;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -31,22 +32,44 @@ public class FollowHoloHandler extends famiHoloHandler {
                 handleQueue();
 
                 // Cloning HashMap because we are modifying it inside the forEach loop
-                ((HashMap<UUID, ArrayList<famiHologram>>) getMap().clone()).forEach(((uuid, famiHolograms) -> {
+                getMap().forEach(((uuid, famiHolograms) -> {
                     Entity entity = Bukkit.getEntity(uuid);
 
                     // Check entity
                     if(entity == null){
-                        clearList(uuid);
+                        // Has to be handled outside for loop otherwise it would throw ConcurrentModificationExc
+                        queue.add(
+                                new AExecuteQueue() {
+                                    @Override
+                                    public void execute() {
+                                        clearList(uuid);
+                                    }
+                                }
+                        );
                         return;
                     }
                     if(!entity.isValid()){
                         if(entity instanceof Player) {
                             if(!((Player) entity).isOnline()){
-                                clearList(uuid);
+                                queue.add(
+                                        new AExecuteQueue() {
+                                            @Override
+                                            public void execute() {
+                                                clearList(uuid);
+                                            }
+                                        }
+                                );
                                 return;
                             }
                         }else{
-                            clearList(uuid);
+                            queue.add(
+                                    new AExecuteQueue() {
+                                        @Override
+                                        public void execute() {
+                                            clearList(uuid);
+                                        }
+                                    }
+                            );
                             return;
                         }
                     }
@@ -57,7 +80,14 @@ public class FollowHoloHandler extends famiHoloHandler {
 
                     for(famiHologram holo : arr) {
                         if(holo.getHologram().isDeleted()){
-                            removeFromList(uuid, holo);
+                            queue.add(
+                                    new AExecuteQueue() {
+                                        @Override
+                                        public void execute() {
+                                            removeFromList(uuid, holo);
+                                        }
+                                    }
+                            );
                             continue;
                         }
 
