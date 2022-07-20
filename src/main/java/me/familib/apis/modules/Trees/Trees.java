@@ -27,6 +27,7 @@ public final class Trees extends AModuleHandler {
 
     @Override
     protected boolean disable() {
+        getPlugin().getCommand("createtree").setExecutor(null);
         return true;
     }
 }

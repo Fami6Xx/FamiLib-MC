@@ -20,5 +20,9 @@ You must have:
 - Updating lines that can be updated periodically in your plugin
 - Everything running ASYNC, so it doesn't cause lag to main thread
 
+### Procedurally generated trees
+- As of now (20.7.2022) the generator has only one type and is outdated (27.11.2021)
+- /createtree to use it
+
 ### Others
 - RayCast API
