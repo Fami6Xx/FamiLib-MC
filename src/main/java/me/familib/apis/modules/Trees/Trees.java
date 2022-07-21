@@ -1,6 +1,5 @@
 package me.familib.apis.modules.Trees;
 
-import me.familib.apis.modules.Trees.code.command;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
 
 public final class Trees extends AModuleHandler {
@@ -21,13 +20,11 @@ public final class Trees extends AModuleHandler {
 
     @Override
     protected boolean enable() {
-        getPlugin().getCommand("createtree").setExecutor(new command());
         return true;
     }
 
     @Override
     protected boolean disable() {
-        getPlugin().getCommand("createtree").setExecutor(null);
         return true;
     }
 }
