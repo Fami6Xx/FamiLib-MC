@@ -11,12 +11,23 @@ public class FamiModuleHandler {
     private final ArrayList<AModuleHandler> modules = new ArrayList<>();
 
     public FamiModuleHandler(){
-        // Initialize all modules but don't start them
+        // Initialize all modules and start those, whom are configured to do so
 
         modules.add(new HoloAPI());
         modules.add(new Trees());
+        initialize();
         tryEnabling("Trees");
         tryEnabling("HoloAPI");
+    }
+
+    /**
+     * Run at start of ModuleHandler, it enables modules which can't be disabled
+     */
+    private void initialize(){
+        modules.forEach(module -> {
+            if(!module.canBeDisabled())
+                tryEnabling(module.getName());
+        });
     }
 
     public void disableAll(){
@@ -36,6 +47,7 @@ public class FamiModuleHandler {
         Optional<AModuleHandler> optional =
                 modules.stream()
                         .filter(handler -> handler.getName().equals(name))
+                        .filter(AModuleHandler::canBeDisabled)
                         .findFirst();
 
         if(!optional.isPresent()) return false;
@@ -55,6 +67,7 @@ public class FamiModuleHandler {
         Optional<AModuleHandler> optional =
                 modules.stream()
                         .filter(handler -> handler.getName().equals(name))
+                        .filter(AModuleHandler::canBeDisabled)
                         .findFirst();
 
         if(!optional.isPresent()) return false;

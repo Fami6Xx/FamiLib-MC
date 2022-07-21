@@ -8,6 +8,7 @@ public abstract class AModuleHandler {
     public abstract String getName();
     public abstract double getVersion();
     public abstract String getDescription();
+    public abstract boolean canBeDisabled();
 
     /**
      * Checks if module is enabled or disabled
@@ -21,9 +22,19 @@ public abstract class AModuleHandler {
      * Enables/Disables Module
      */
     public boolean setEnabled(boolean bool){
-        enabled = bool;
-        if(bool) return enable();
-        else return disable();
+        if(bool){
+            if(enable()){
+                enabled = true;
+                return true;
+            }
+        }
+        else if(canBeDisabled()){
+            if(disable()) {
+                enabled = false;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

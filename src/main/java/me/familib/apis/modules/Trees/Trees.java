@@ -19,6 +19,11 @@ public final class Trees extends AModuleHandler {
     }
 
     @Override
+    public boolean canBeDisabled() {
+        return true;
+    }
+
+    @Override
     protected boolean enable() {
         return true;
     }
@@ -27,4 +32,5 @@ public final class Trees extends AModuleHandler {
     protected boolean disable() {
         return true;
     }
+
 }

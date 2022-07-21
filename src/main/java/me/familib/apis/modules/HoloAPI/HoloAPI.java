@@ -34,6 +34,11 @@ public final class HoloAPI extends AModuleHandler implements Listener {
     }
 
     @Override
+    public boolean canBeDisabled() {
+        return true;
+    }
+
+    @Override
     protected boolean enable() {
         if(!getPlugin().getServer().getPluginManager().isPluginEnabled("HolographicDisplays"))
             return false;
