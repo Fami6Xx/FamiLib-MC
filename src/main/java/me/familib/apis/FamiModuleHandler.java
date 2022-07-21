@@ -33,7 +33,7 @@ public class FamiModuleHandler {
     public void disableAll(){
         modules.forEach(handler -> {
             if(handler.isEnabled())
-                handler.setEnabled(false);
+                handler.setEnabled(false, true);
         });
     }
 

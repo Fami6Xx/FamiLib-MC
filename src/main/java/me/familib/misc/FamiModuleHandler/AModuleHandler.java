@@ -20,6 +20,9 @@ public abstract class AModuleHandler {
 
     /**
      * Enables/Disables Module
+     *
+     * @param bool true if you want to enable module, false if you want to disable
+     * @return true if there was no problem and module changed status, false if module can't be disabled or something went wrong
      */
     public boolean setEnabled(boolean bool){
         if(bool){
@@ -33,6 +36,26 @@ public abstract class AModuleHandler {
                 enabled = false;
                 return true;
             }
+        }
+        return false;
+    }
+    /**
+     * FORCE Enables/Disables Module
+     *
+     * @param bool true if you want to enable module, false if you want to disable
+     * @param force if set then it skips canBeDisabled() and forcefully tries to disable module (Not recommended!)
+     * @return true if there was no problem and module changed status, false if something terrible happened
+     */
+    public boolean setEnabled(boolean bool, boolean force){
+        if(bool){
+            if(enable()){
+                enabled = true;
+                return true;
+            }
+        }
+        else if(disable()) {
+            enabled = false;
+            return true;
         }
         return false;
     }
