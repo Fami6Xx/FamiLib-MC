@@ -61,6 +61,9 @@ public final class HoloAPI extends AModuleHandler implements Listener {
         this.followHandler.stop();
         this.VisibilityHandler.stop();
 
+        PlayerLoginEvent.getHandlerList().unregister(this);
+        EntitySpawnEvent.getHandlerList().unregister(this);
+
         return true;
     }
 
