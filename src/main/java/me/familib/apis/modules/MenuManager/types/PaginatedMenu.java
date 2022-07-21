@@ -47,6 +47,6 @@ public abstract class PaginatedMenu extends Menu{
 
     @Override
     public int getSlots(){
-        return 53;
+        return 54;
     }
 }
