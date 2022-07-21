@@ -3,11 +3,14 @@ package me.familib.apis.modules.MenuManager.types;
 import me.familib.apis.modules.MenuManager.utils.PlayerMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class PaginatedMenu extends Menu{
     protected int page = 0;
     protected int maxItemsPerPage = 28;
     protected int index = 0;
+    
+    protected ItemStack BORDER_GLASS = makeColoredGlass((short) 15);
 
     public PaginatedMenu(PlayerMenu menu){
         super(menu);
@@ -21,20 +24,20 @@ public abstract class PaginatedMenu extends Menu{
 
         for (int i = 0; i < 10; i++) {
             if (inventory.getItem(i) == null) {
-                inventory.setItem(i, super.FILLER_GLASS);
+                inventory.setItem(i, BORDER_GLASS);
             }
         }
 
-        inventory.setItem(17, super.FILLER_GLASS);
-        inventory.setItem(18, super.FILLER_GLASS);
-        inventory.setItem(26, super.FILLER_GLASS);
-        inventory.setItem(27, super.FILLER_GLASS);
-        inventory.setItem(35, super.FILLER_GLASS);
-        inventory.setItem(36, super.FILLER_GLASS);
+        inventory.setItem(17, BORDER_GLASS);
+        inventory.setItem(18, BORDER_GLASS);
+        inventory.setItem(26, BORDER_GLASS);
+        inventory.setItem(27, BORDER_GLASS);
+        inventory.setItem(35, BORDER_GLASS);
+        inventory.setItem(36, BORDER_GLASS);
 
         for (int i = 44; i < 54; i++) {
             if (inventory.getItem(i) == null) {
-                inventory.setItem(i, super.FILLER_GLASS);
+                inventory.setItem(i, BORDER_GLASS);
             }
         }
     }

@@ -14,7 +14,7 @@ import java.util.Arrays;
 public abstract class Menu implements InventoryHolder {
     protected PlayerMenu playerMenu;
     protected Inventory inventory;
-    protected ItemStack FILLER_GLASS = makeFillerGlass();
+    protected ItemStack FILLER_GLASS = makeColoredGlass((short) 7);
 
     public Menu(PlayerMenu menu) {
         this.playerMenu = menu;
@@ -45,8 +45,8 @@ public abstract class Menu implements InventoryHolder {
         }
     }
 
-    public ItemStack makeFillerGlass(){
-        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+    public ItemStack makeColoredGlass(short color){
+        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, color);
 
         ItemMeta meta = glass.getItemMeta();
         meta.setDisplayName(" ");
