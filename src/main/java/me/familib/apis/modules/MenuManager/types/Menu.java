@@ -4,6 +4,7 @@ import me.familib.apis.modules.MenuManager.utils.PlayerMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -24,12 +25,36 @@ public abstract class Menu implements InventoryHolder {
     public abstract void handleMenu(InventoryClickEvent e);
     public abstract void setMenuItems();
 
-    public void open() {
+    private void closeAndCreateInv(){
+        playerMenu.getPlayer().closeInventory(InventoryCloseEvent.Reason.PLUGIN);
         inventory = Bukkit.createInventory(this, getSlots(), getMenuName());
 
         this.setMenuItems();
 
         playerMenu.getPlayer().openInventory(inventory);
+    }
+
+    public void open() {
+        if(inventory != null){
+            if(inventory.getSize() != getSlots()){
+                closeAndCreateInv();
+                return;
+            }
+
+            if(inventory.getHolder() != this){
+                closeAndCreateInv();
+                return;
+            }
+
+            if(!inventory.getName().equals(getMenuName())){
+                closeAndCreateInv();
+                return;
+            }
+
+            this.setMenuItems();
+        }else{
+            closeAndCreateInv();
+        }
     }
 
     @Override
