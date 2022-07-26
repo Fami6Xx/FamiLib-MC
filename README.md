@@ -21,8 +21,11 @@ You must have:
 - Everything running ASYNC, so it doesn't cause lag to main thread
 
 ### Procedurally generated trees
-- As of now (20.7.2022) the generator has only one type and is outdated (27.11.2021)
-- /createtree to use it
+- Now being remade
+
+### MenuManager
+- Menu creating & handling much easier!
+- Paginated Menu API included
 
 ### Others
 - RayCast API
