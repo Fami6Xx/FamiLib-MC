@@ -70,12 +70,9 @@ public class VisibilityHoloHandler extends famiHoloHandler {
                         if (holo.getHologram().isDeleted()) {
                             // Has to be handled outside for loop otherwise it would throw ConcurrentModificationExc
                             queue.add(
-                                    new IExecuteQueue() {
-                                        @Override
-                                        public void execute() {
-                                            removeFromList(uuid, holo);
-                                            removeList(holo.getUUID());
-                                        }
+                                    () -> {
+                                        removeFromList(uuid, holo);
+                                        removeList(holo.getUUID());
                                     }
                             );
                             continue;

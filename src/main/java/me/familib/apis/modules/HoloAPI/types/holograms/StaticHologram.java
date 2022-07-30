@@ -20,12 +20,7 @@ public class StaticHologram extends famiHologram {
         StaticHologram staticHologram = this;
 
         api.getVisibilityHandler().queue.add(
-                new IExecuteQueue() {
-                    @Override
-                    public void execute() {
-                        api.getVisibilityHandler().addToList(getUUID(), staticHologram);
-                    }
-                }
+                () -> api.getVisibilityHandler().addToList(getUUID(), staticHologram)
         );
     }
 
@@ -39,12 +34,7 @@ public class StaticHologram extends famiHologram {
         StaticHologram staticHologram = this;
 
         api.getVisibilityHandler().queue.add(
-                new IExecuteQueue() {
-                    @Override
-                    public void execute() {
-                        api.getVisibilityHandler().removeFromList(getUUID(), staticHologram);
-                    }
-                }
+                () -> api.getVisibilityHandler().removeFromList(getUUID(), staticHologram)
         );
     }
 }

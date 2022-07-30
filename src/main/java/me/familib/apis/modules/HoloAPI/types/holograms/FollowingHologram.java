@@ -39,20 +39,10 @@ public class FollowingHologram extends famiHologram {
 
         getHologram().getVisibilityManager().setVisibleByDefault(isVisibleByDefault);
 
-        api.getFollowHandler().queue.add(new IExecuteQueue() {
-            @Override
-            public void execute() {
-                api.getFollowHandler().addToList(toFollow.getUniqueId(), followingHologram);
-            }
-        });
+        api.getFollowHandler().queue.add(() -> api.getFollowHandler().addToList(toFollow.getUniqueId(), followingHologram));
         if(!isVisibleByDefault) {
             api.getVisibilityHandler().queue.add(
-                    new IExecuteQueue() {
-                        @Override
-                        public void execute() {
-                            api.getVisibilityHandler().addToList(getUUID(), followingHologram);
-                        }
-                    }
+                    () -> api.getVisibilityHandler().addToList(getUUID(), followingHologram)
             );
         }
 
@@ -70,18 +60,8 @@ public class FollowingHologram extends famiHologram {
 
     @Override
     public void destroy(){
-        api.getFollowHandler().queue.add(new IExecuteQueue() {
-            @Override
-            public void execute() {
-                api.getFollowHandler().removeFromList(followingUUID, followingHologram);
-            }
-        });
-        api.getVisibilityHandler().queue.add(new IExecuteQueue() {
-            @Override
-            public void execute() {
-                api.getVisibilityHandler().removeFromList(followingUUID, followingHologram);
-            }
-        });
+        api.getFollowHandler().queue.add(() -> api.getFollowHandler().removeFromList(followingUUID, followingHologram));
+        api.getVisibilityHandler().queue.add(() -> api.getVisibilityHandler().removeFromList(followingUUID, followingHologram));
         getHologram().delete();
     }
 

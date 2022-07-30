@@ -39,12 +39,8 @@ public class FollowHoloHandler extends famiHoloHandler {
                     if(entity == null){
                         // Has to be handled outside for loop otherwise it would throw ConcurrentModificationExc
                         queue.add(
-                                new IExecuteQueue() {
-                                    @Override
-                                    public void execute() {
-                                        clearList(uuid);
-                                    }
-                                }
+
+                                () -> clearList(uuid)
                         );
                         return;
                     }
@@ -52,23 +48,13 @@ public class FollowHoloHandler extends famiHoloHandler {
                         if(entity instanceof Player) {
                             if(!((Player) entity).isOnline()){
                                 queue.add(
-                                        new IExecuteQueue() {
-                                            @Override
-                                            public void execute() {
-                                                clearList(uuid);
-                                            }
-                                        }
+                                        () -> clearList(uuid)
                                 );
                                 return;
                             }
                         }else{
                             queue.add(
-                                    new IExecuteQueue() {
-                                        @Override
-                                        public void execute() {
-                                            clearList(uuid);
-                                        }
-                                    }
+                                    () -> clearList(uuid)
                             );
                             return;
                         }
@@ -81,12 +67,7 @@ public class FollowHoloHandler extends famiHoloHandler {
                     for(famiHologram holo : arr) {
                         if(holo.getHologram().isDeleted()){
                             queue.add(
-                                    new IExecuteQueue() {
-                                        @Override
-                                        public void execute() {
-                                            removeFromList(uuid, holo);
-                                        }
-                                    }
+                                    () -> removeFromList(uuid, holo)
                             );
                             continue;
                         }
