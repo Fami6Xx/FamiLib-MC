@@ -3,7 +3,7 @@ package me.familib.apis.modules.HoloAPI.types.holograms;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.HoloAPI;
-import me.familib.misc.AExecuteQueue;
+import me.familib.misc.IExecuteQueue;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
@@ -39,7 +39,7 @@ public class FollowingHologram extends famiHologram {
 
         getHologram().getVisibilityManager().setVisibleByDefault(isVisibleByDefault);
 
-        api.getFollowHandler().queue.add(new AExecuteQueue() {
+        api.getFollowHandler().queue.add(new IExecuteQueue() {
             @Override
             public void execute() {
                 api.getFollowHandler().addToList(toFollow.getUniqueId(), followingHologram);
@@ -47,7 +47,7 @@ public class FollowingHologram extends famiHologram {
         });
         if(!isVisibleByDefault) {
             api.getVisibilityHandler().queue.add(
-                    new AExecuteQueue() {
+                    new IExecuteQueue() {
                         @Override
                         public void execute() {
                             api.getVisibilityHandler().addToList(getUUID(), followingHologram);
@@ -70,13 +70,13 @@ public class FollowingHologram extends famiHologram {
 
     @Override
     public void destroy(){
-        api.getFollowHandler().queue.add(new AExecuteQueue() {
+        api.getFollowHandler().queue.add(new IExecuteQueue() {
             @Override
             public void execute() {
                 api.getFollowHandler().removeFromList(followingUUID, followingHologram);
             }
         });
-        api.getVisibilityHandler().queue.add(new AExecuteQueue() {
+        api.getVisibilityHandler().queue.add(new IExecuteQueue() {
             @Override
             public void execute() {
                 api.getVisibilityHandler().removeFromList(followingUUID, followingHologram);

@@ -1,7 +1,7 @@
 package me.familib.apis.modules.HoloAPI.handlers;
 
 import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
-import me.familib.misc.AExecuteQueue;
+import me.familib.misc.IExecuteQueue;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class famiHoloHandler {
     // This queue handles modification requests for anything from other threads
-    public BlockingQueue<AExecuteQueue> queue = new LinkedBlockingQueue<>();
+    public BlockingQueue<IExecuteQueue> queue = new LinkedBlockingQueue<>();
 
     public void handleQueue(){
         if(queue.size() > 0){

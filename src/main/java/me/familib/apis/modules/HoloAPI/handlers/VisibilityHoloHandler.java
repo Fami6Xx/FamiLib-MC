@@ -3,7 +3,7 @@ package me.familib.apis.modules.HoloAPI.handlers;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
-import me.familib.misc.AExecuteQueue;
+import me.familib.misc.IExecuteQueue;
 import me.familib.misc.RayCast.RayCast;
 import me.familib.misc.RayCast.RayCastResult;
 import org.bukkit.Bukkit;
@@ -70,7 +70,7 @@ public class VisibilityHoloHandler extends famiHoloHandler {
                         if (holo.getHologram().isDeleted()) {
                             // Has to be handled outside for loop otherwise it would throw ConcurrentModificationExc
                             queue.add(
-                                    new AExecuteQueue() {
+                                    new IExecuteQueue() {
                                         @Override
                                         public void execute() {
                                             removeFromList(uuid, holo);

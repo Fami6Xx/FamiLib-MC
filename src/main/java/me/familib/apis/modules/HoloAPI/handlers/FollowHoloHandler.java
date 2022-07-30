@@ -2,7 +2,7 @@ package me.familib.apis.modules.HoloAPI.handlers;
 
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
-import me.familib.misc.AExecuteQueue;
+import me.familib.misc.IExecuteQueue;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -39,7 +39,7 @@ public class FollowHoloHandler extends famiHoloHandler {
                     if(entity == null){
                         // Has to be handled outside for loop otherwise it would throw ConcurrentModificationExc
                         queue.add(
-                                new AExecuteQueue() {
+                                new IExecuteQueue() {
                                     @Override
                                     public void execute() {
                                         clearList(uuid);
@@ -52,7 +52,7 @@ public class FollowHoloHandler extends famiHoloHandler {
                         if(entity instanceof Player) {
                             if(!((Player) entity).isOnline()){
                                 queue.add(
-                                        new AExecuteQueue() {
+                                        new IExecuteQueue() {
                                             @Override
                                             public void execute() {
                                                 clearList(uuid);
@@ -63,7 +63,7 @@ public class FollowHoloHandler extends famiHoloHandler {
                             }
                         }else{
                             queue.add(
-                                    new AExecuteQueue() {
+                                    new IExecuteQueue() {
                                         @Override
                                         public void execute() {
                                             clearList(uuid);
@@ -81,7 +81,7 @@ public class FollowHoloHandler extends famiHoloHandler {
                     for(famiHologram holo : arr) {
                         if(holo.getHologram().isDeleted()){
                             queue.add(
-                                    new AExecuteQueue() {
+                                    new IExecuteQueue() {
                                         @Override
                                         public void execute() {
                                             removeFromList(uuid, holo);

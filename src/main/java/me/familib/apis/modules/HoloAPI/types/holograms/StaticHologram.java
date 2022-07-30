@@ -3,7 +3,7 @@ package me.familib.apis.modules.HoloAPI.types.holograms;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.HoloAPI;
-import me.familib.misc.AExecuteQueue;
+import me.familib.misc.IExecuteQueue;
 import org.bukkit.Location;
 
 public class StaticHologram extends famiHologram {
@@ -20,7 +20,7 @@ public class StaticHologram extends famiHologram {
         StaticHologram staticHologram = this;
 
         api.getVisibilityHandler().queue.add(
-                new AExecuteQueue() {
+                new IExecuteQueue() {
                     @Override
                     public void execute() {
                         api.getVisibilityHandler().addToList(getUUID(), staticHologram);
@@ -39,7 +39,7 @@ public class StaticHologram extends famiHologram {
         StaticHologram staticHologram = this;
 
         api.getVisibilityHandler().queue.add(
-                new AExecuteQueue() {
+                new IExecuteQueue() {
                     @Override
                     public void execute() {
                         api.getVisibilityHandler().removeFromList(getUUID(), staticHologram);
