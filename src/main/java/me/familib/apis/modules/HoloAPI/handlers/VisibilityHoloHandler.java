@@ -95,9 +95,6 @@ public class VisibilityHoloHandler extends famiHoloHandler {
                                 if (!nowVisible.contains(player)) {
                                     manager.hideTo(player);
                                 }
-                                if (!checkConditions(player, holo)) {
-                                    manager.hideTo(player);
-                                }
                             });
 
                             // Show hologram to players who don't see it but passed conditions
