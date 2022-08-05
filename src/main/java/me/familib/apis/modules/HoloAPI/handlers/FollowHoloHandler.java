@@ -2,7 +2,6 @@ package me.familib.apis.modules.HoloAPI.handlers;
 
 import me.familib.FamiLib;
 import me.familib.apis.modules.HoloAPI.types.holograms.famiHologram;
-import me.familib.misc.IExecuteQueue;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
