@@ -11,11 +11,35 @@ public abstract class EasyPaginatedMenu extends PaginatedMenu{
         super(menu);
     }
 
+    /**
+     * Gets ItemStack you created from your collection
+     * @param index Index of item you want to get from collection
+     * @return ItemStack you create
+     */
     public abstract ItemStack getItemFromIndex(int index);
-    public abstract int getSize();
+
+    /**
+     *
+     * @return Size of collection you use
+     */
+    public abstract int getCollectionSize();
+
+    /**
+     * Gets error message
+     * @return Error message that the player is already on first page
+     */
     public abstract String getFirstPageErrorMessage();
+
+    /**
+     * Gets error message
+     * @return Error message that the player is already on last page and can't go any further
+     */
     public abstract String getLastPageErrorMessage();
 
+    /**
+     * Handles click on your item
+     * @param e Previously handled InventoryClickEvent
+     */
     public abstract void handlePaginatedMenu(InventoryClickEvent e);
 
     @Override
@@ -34,7 +58,7 @@ public abstract class EasyPaginatedMenu extends PaginatedMenu{
                     super.open();
                 }
             }else if(name.equalsIgnoreCase("Right")){
-                if(index + 1 < getSize()){
+                if(index + 1 < getCollectionSize()){
                     page++;
                     super.open();
                 }else{
@@ -52,7 +76,7 @@ public abstract class EasyPaginatedMenu extends PaginatedMenu{
 
         for(int i = 0; i < getMaxItemsPerPage(); i++){
             index = getMaxItemsPerPage() * page + i;
-            if(index >= getSize()) break;
+            if(index >= getCollectionSize()) break;
 
             ItemStack item = getItemFromIndex(index);
 
