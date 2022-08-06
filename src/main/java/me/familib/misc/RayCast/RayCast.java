@@ -61,28 +61,51 @@ public class RayCast {
         this.world = world;
     }
 
+    /**
+     * Shows RayCast via particles
+     * @param player Player you want to show the ray cast
+     * @return Returns this
+     */
     public RayCast showRayCast(Player player){
         this.visualizeRay = true;
         this.player = player;
         return this;
     }
 
+    /**
+     * Shows blocks RayCast went through
+     * @param player Player you want to show the looped blocks
+     * @return Returns this
+     */
     public RayCast showLoopedBlocks(Player player){
         this.visualizeBlocks = true;
         this.player = player;
         return this;
     }
 
+    /**
+     * When RayCast hits a liquid or a block algorithm checks its material if its see through (Like Glass, Water, Grass, Flowers etc.)
+     * @return Returns this
+     */
     public RayCast enableIgnoreSeeThroughMaterials(){
         this.ignoreSeeThroughBlocks = true;
         return this;
     }
 
+    /**
+     * Add materials to ignore when RayCast hits a block
+     * @param materials Blocks you want to ignore when shooting RayCast
+     * @return Returns this
+     */
     public RayCast addIgnoredMaterials(Material... materials){
         this.ignoredMaterials.addAll(Arrays.asList(materials));
         return this;
     }
 
+    /**
+     * Shoots RayCast in given direction and looping through blocks it hits
+     * @return Returns a result of this RayCast
+     */
     public RayCastResult shoot(){
         // Normalize vector
         vector.normalize();
@@ -92,6 +115,7 @@ public class RayCast {
 
         Location loc = startLoc.clone();
 
+        // Retype distance to integer for further math usage
         int count = 0;
         int scale = BigDecimal.valueOf(distance).scale();
         int finalDistance = (int) (distance * Math.pow(10, scale));
@@ -146,14 +170,6 @@ public class RayCast {
             loc.add(vector);
 
             if(endLoc != null) {
-
-                // ToDo: Find better endLoc solution
-
-                // Distance can't be used as it uses Pythagoras's theorem which is costly
-
-                // Vector should reach endLoc in 100% of time, because that vector is calculated by the end vector
-                // So maybe just check if the vector is equal to the end vector?
-
                 if (
                         blockLoc.getBlockX() == endLoc.getBlockX() &&
                                 blockLoc.getBlockY() == endLoc.getBlockY() &&
