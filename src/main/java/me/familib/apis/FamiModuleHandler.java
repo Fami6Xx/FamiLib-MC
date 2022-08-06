@@ -1,6 +1,7 @@
 package me.familib.apis;
 
 import me.familib.apis.modules.HoloAPI.HoloAPI;
+import me.familib.apis.modules.MenuManager.MenuManager;
 import me.familib.apis.modules.Trees.Trees;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
 
@@ -15,6 +16,7 @@ public class FamiModuleHandler {
 
         modules.add(new HoloAPI());
         modules.add(new Trees());
+        modules.add(new MenuManager());
         initialize();
         tryEnabling("Trees");
         tryEnabling("HoloAPI");
