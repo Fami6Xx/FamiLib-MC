@@ -82,7 +82,7 @@ public abstract class EasyPaginatedMenu extends PaginatedMenu{
 
             if(item == null) break;
 
-            super.inventory.setItem(index + 10, item);
+            super.inventory.setItem(index, item);
         }
     }
 
