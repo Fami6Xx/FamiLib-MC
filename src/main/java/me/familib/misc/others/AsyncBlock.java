@@ -30,6 +30,10 @@ public class AsyncBlock {
         return this.location;
     }
 
+    public synchronized void build(){
+        this.location.getBlock().setType(this.material);
+    }
+
     public AsyncBlock getBlockRelative(BlockFace face){
         Block block = location.getBlock().getRelative(face);
         return new AsyncBlock(block.getLocation(), block.getType());
