@@ -19,7 +19,6 @@ public class FamiModuleHandler {
         modules.add(new MenuManager());
         initialize();
         tryEnabling("Trees");
-        tryEnabling("HoloAPI");
     }
 
     /**
