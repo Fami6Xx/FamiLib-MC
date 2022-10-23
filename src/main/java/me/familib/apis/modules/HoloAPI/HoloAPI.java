@@ -5,12 +5,14 @@ import me.familib.apis.modules.HoloAPI.handlers.VisibilityHoloHandler;
 import me.familib.apis.modules.HoloAPI.types.holograms.FollowingHologram;
 import me.familib.apis.modules.HoloAPI.types.lines.UpdatingLine;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
+import me.familib.misc.FamiModuleHandler.ModuleSettings;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public final class HoloAPI extends AModuleHandler implements Listener {
@@ -36,6 +38,12 @@ public final class HoloAPI extends AModuleHandler implements Listener {
     @Override
     public boolean canBeDisabled() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public ModuleSettings getModuleSettings() {
+        return null;
     }
 
     @Override

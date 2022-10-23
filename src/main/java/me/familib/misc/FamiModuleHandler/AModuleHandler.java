@@ -3,12 +3,17 @@ package me.familib.misc.FamiModuleHandler;
 import me.familib.FamiLib;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
+
 public abstract class AModuleHandler {
     private boolean enabled = false;
     public abstract String getName();
     public abstract double getVersion();
     public abstract String getDescription();
     public abstract boolean canBeDisabled();
+
+    @Nullable
+    public abstract ModuleSettings getModuleSettings();
 
     /**
      * Checks if module is enabled or disabled

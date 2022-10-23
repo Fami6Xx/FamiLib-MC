@@ -1,6 +1,9 @@
 package me.familib.apis.modules.Trees;
 
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
+import me.familib.misc.FamiModuleHandler.ModuleSettings;
+
+import javax.annotation.Nullable;
 
 public final class Trees extends AModuleHandler {
     @Override
@@ -21,6 +24,12 @@ public final class Trees extends AModuleHandler {
     @Override
     public boolean canBeDisabled() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public ModuleSettings getModuleSettings() {
+        return null;
     }
 
     @Override

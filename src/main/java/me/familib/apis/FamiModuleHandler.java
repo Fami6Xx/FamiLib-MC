@@ -17,6 +17,11 @@ public class FamiModuleHandler {
         modules.add(new HoloAPI());
         modules.add(new Trees());
         modules.add(new MenuManager());
+        try {
+            System.out.println(modules.get(2).getModuleSettings().getAllValues());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initialize();
         tryEnabling("Trees");
     }

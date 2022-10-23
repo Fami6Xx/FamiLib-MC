@@ -3,9 +3,11 @@ package me.familib.apis.modules.MenuManager;
 import me.familib.apis.modules.MenuManager.handlers.MenuInvClickHandler;
 import me.familib.apis.modules.MenuManager.utils.PlayerMenu;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
+import me.familib.misc.FamiModuleHandler.ModuleSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 public class MenuManager extends AModuleHandler {
@@ -31,6 +33,12 @@ public class MenuManager extends AModuleHandler {
     @Override
     public boolean canBeDisabled() {
         return false;
+    }
+
+    @Nullable
+    @Override
+    public ModuleSettings getModuleSettings() {
+        return new MenuManagerSettings();
     }
 
     @Override
