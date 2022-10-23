@@ -38,7 +38,7 @@ public class MenuManager extends AModuleHandler {
     @Nullable
     @Override
     public ModuleSettings getModuleSettings() {
-        return new MenuManagerSettings();
+        return null;
     }
 
     @Override
