@@ -36,6 +36,9 @@ public class FamiModuleHandler {
         });
     }
 
+    /**
+     * Force disables all modules
+     */
     public void disableAll(){
         modules.forEach(handler -> {
             if(handler.isEnabled())
