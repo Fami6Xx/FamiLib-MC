@@ -7,11 +7,35 @@ import javax.annotation.Nullable;
 
 public abstract class AModuleHandler {
     private boolean enabled = false;
+
+    /**
+     * Gets name of this module
+     * @return String of name
+     */
     public abstract String getName();
+
+    /**
+     * Gets version of this module
+     * @return Double representing version
+     */
     public abstract double getVersion();
+
+    /**
+     * Gets Description of this module
+     * @return String of description
+     */
     public abstract String getDescription();
+
+    /**
+     * If true, module can be safely disabled, otherwise module can't be disabled and module will initialize on start
+     * @return Boolean if module can be sabled
+     */
     public abstract boolean canBeDisabled();
 
+    /**
+     * Gets saved moduleSettings class from specified module. Null if module doesn't have any settings
+     * @return ModuleSettings class, which contains primitive data types that can be saved in json. Otherwise null
+     */
     @Nullable
     public abstract ModuleSettings getModuleSettings();
 
