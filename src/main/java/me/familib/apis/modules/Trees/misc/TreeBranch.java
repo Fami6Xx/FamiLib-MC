@@ -1,5 +1,7 @@
 package me.familib.apis.modules.Trees.misc;
 
+import me.familib.FamiLib;
+import me.familib.apis.modules.Trees.TreeSettings;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TreeBranch {
     Random random = new Random();
+    TreeSettings settings = (TreeSettings) FamiLib.getInstance().getModuleHandler().getModule("Trees").getModuleSettings();
     TreeBranch parent;
     HashMap<Integer, TreeBranch> children = new HashMap<>();
     ArrayList<Vector> vectors = new ArrayList<>();
@@ -68,7 +71,7 @@ public class TreeBranch {
         if(!isEnded){
             int chance = random.nextInt(101);
 
-            double randomnessFactor = 1;
+            double randomnessFactor = settings.randomnessFactor;
 
             if(chance < 26){
                 newVector.add(Vector.getRandom().normalize().multiply(randomnessFactor)).normalize();
@@ -106,7 +109,7 @@ public class TreeBranch {
 
         for (int i = 0; i < vectors.size(); i++) {
             double length = 0;
-            double growthFactor = 1.5;
+            double growthFactor = settings.growthFactor;
 
             for (int j = i; j < vectors.size(); j++) {
                 length += Math.pow(vectors.get(j).length(), growthFactor);

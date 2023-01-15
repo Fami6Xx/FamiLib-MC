@@ -6,6 +6,8 @@ import me.familib.misc.FamiModuleHandler.ModuleSettings;
 import javax.annotation.Nullable;
 
 public final class Trees extends AModuleHandler {
+    TreeSettings settings = new TreeSettings();
+
     @Override
     public String getName() {
         return "Trees";
@@ -29,7 +31,7 @@ public final class Trees extends AModuleHandler {
     @Nullable
     @Override
     public ModuleSettings getModuleSettings() {
-        return null;
+        return settings;
     }
 
     @Override
