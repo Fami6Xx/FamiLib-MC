@@ -1,11 +1,21 @@
 package me.familib.apis.modules.Trees;
 
+import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import me.familib.FamiLib;
+import me.familib.apis.modules.Trees.misc.TreeBranch;
 import me.familib.misc.FamiModuleHandler.AModuleHandler;
 import me.familib.misc.FamiModuleHandler.ModuleSettings;
+import org.bukkit.Location;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nullable;
+import java.util.EventListener;
+import java.util.logging.Level;
 
-public final class Trees extends AModuleHandler {
+public final class Trees extends AModuleHandler implements Listener {
     TreeSettings settings = new TreeSettings();
 
     @Override
@@ -36,6 +46,8 @@ public final class Trees extends AModuleHandler {
 
     @Override
     protected boolean enable() {
+        FamiLib.getInstance().getServer().getPluginManager().registerEvents(this, FamiLib.getFamiLib());
+
         return true;
     }
 
@@ -44,4 +56,38 @@ public final class Trees extends AModuleHandler {
         return true;
     }
 
+    @EventHandler
+    public void onJump(AsyncPlayerChatEvent event){
+        TreeBranch base = new TreeBranch(-1, Integer.parseInt(event.getMessage()));
+
+        Location startLoc = event.getPlayer().getLocation();
+
+        event.getPlayer().sendMessage("Started");
+
+        new BukkitRunnable(){
+            int iterations = 0;
+            int end = 50;
+
+            @Override
+            public void run() {
+                if(!base.next()){
+                    event.getPlayer().sendMessage("DEBUG | Ended");
+                    base.visualize(startLoc.clone());
+                    end--;
+                    return;
+                }
+
+                iterations++;
+
+                if(end < 0){
+                    cancel();
+                }
+
+                if(iterations % 10 == 0){
+                    event.getPlayer().sendMessage("DEBUG | " + iterations);
+                    base.visualize(startLoc.clone());
+                }
+            }
+        }.runTaskTimerAsynchronously(getPlugin(), 10, 10);
+    }
 }

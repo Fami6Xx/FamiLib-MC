@@ -2,10 +2,13 @@ package me.familib.apis.modules.Trees.misc;
 
 import me.familib.FamiLib;
 import me.familib.apis.modules.Trees.TreeSettings;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -62,30 +65,45 @@ public class TreeBranch {
     ToDo:
      - maybe a build function?
      - maybe a visualize function to spawn particles in position of vectors
+     - All seeds seem to go to positive x, dont know why
      */
 
     public boolean next(){
-        Vector newVector = latestVector.clone();
-        vectors.add(latestVector);
 
         if(!isEnded){
+            Vector newVector = latestVector.clone();
+            vectors.add(latestVector);
+
             int chance = random.nextInt(101);
 
             double randomnessFactor = settings.randomnessFactor;
 
-            if(chance < 26){
-                newVector.add(Vector.getRandom().normalize().multiply(randomnessFactor)).normalize();
+            if(chance < settings.randomWayChance){
+                newVector.add(Vector.getRandom().multiply(randomnessFactor)).normalize();
             }
 
-            if(chance < 5){
-                children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(Vector.getRandom()).normalize()));
+            if(chance < settings.branchChance){
+                children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(Vector.getRandom().multiply(randomnessFactor)).normalize()));
             }
 
-            if(chance < 3){
+            if(chance < 50){
+                if(chance < 16){
+                    newVector.setX(newVector.getX() * -1);
+                }else if(chance < 32){
+                    newVector.setY(newVector.getY() * -1);
+                }else{
+                    newVector.setZ(newVector.getZ() * -1);
+                }
+            }
+
+            if(chance < settings.endChance * getNthChild() * 0.8){
                 isEnded = true;
+                vectors.add(newVector);
             }
 
-            children.forEach((num, branch) -> {
+            latestVector = newVector;
+
+            ((HashMap<Integer, TreeBranch>)children.clone()).forEach((num, branch) -> {
                 branch.next();
             });
 
@@ -93,13 +111,25 @@ public class TreeBranch {
         }
 
         AtomicBoolean edited = new AtomicBoolean(false);
-        children.forEach((num, treeBranch) -> {
+        ((HashMap<Integer, TreeBranch>)children.clone()).forEach((num, treeBranch) -> {
             if(treeBranch.next()){
                 edited.set(true);
             }
         });
 
         return edited.get();
+    }
+
+    private int getNthChild(){
+        int returning = 1;
+
+        TreeBranch parent = this.parent;
+        while(parent != null){
+            parent = parent.parent;
+            returning++;
+        }
+
+        return returning;
     }
 
     public void calculateRadiusForVectors(){
@@ -153,5 +183,28 @@ public class TreeBranch {
         }
 
         return length;
+    }
+
+    public void visualize(Location startLoc){
+        Iterator<Vector> vectorIterator = vectors.iterator();
+        startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
+        int index = 0;
+
+        do{
+            if(!vectorIterator.hasNext())
+                return;
+
+            Vector vector = vectorIterator.next();
+            startLoc.add(vector);
+            startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
+
+            if(children.containsKey(index)){
+                TreeBranch branch = children.get(index);
+                branch.visualize(startLoc.clone());
+            }
+
+            index++;
+        }while(vectorIterator.hasNext());
+
     }
 }
