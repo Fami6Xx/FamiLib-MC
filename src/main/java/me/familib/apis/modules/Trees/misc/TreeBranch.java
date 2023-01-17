@@ -116,7 +116,7 @@ public class TreeBranch {
                 }
             }
 
-            if(chance < settings.endChance * getNthChild() * 0.8){
+            if(chance < settings.endChance * getNthChild() * settings.endChanceMultiplierByParentNumber){
                 isEnded = true;
                 vectors.add(newVector);
             }
