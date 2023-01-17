@@ -82,17 +82,37 @@ public class TreeBranch {
                 newVector.add(Vector.getRandom().multiply(randomnessFactor)).normalize();
             }
 
-            if(chance < settings.branchChance){
+                if(chance < settings.branchChance){
                 children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(Vector.getRandom().multiply(randomnessFactor)).normalize()));
             }
 
-            if(chance < 50){
-                if(chance < 16){
-                    newVector.setX(newVector.getX() * -1);
-                }else if(chance < 32){
-                    newVector.setY(newVector.getY() * -1);
-                }else{
-                    newVector.setZ(newVector.getZ() * -1);
+
+            if(chance <= 50){
+                if(newVector.getX() > newVector.getZ() && newVector.getX() > newVector.getY()){
+                    if(chance <= 25){
+                        newVector.setZ(newVector.getZ() * -1);
+                    }
+                    else{
+                        newVector.setY(newVector.getY() * -1);
+                    }
+                }
+
+                if(newVector.getY() > newVector.getZ() && newVector.getY() > newVector.getX()){
+                    if(chance <= 25){
+                        newVector.setZ(newVector.getZ() * -1);
+                    }
+                    else{
+                        newVector.setX(newVector.getX() * -1);
+                    }
+                }
+
+                if(newVector.getZ() > newVector.getX() && newVector.getZ() > newVector.getY()){
+                    if(chance <= 25){
+                        newVector.setX(newVector.getX() * -1);
+                    }
+                    else{
+                        newVector.setY(newVector.getY() * -1);
+                    }
                 }
             }
 
