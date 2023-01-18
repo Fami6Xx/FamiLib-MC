@@ -13,10 +13,12 @@ import org.json.JSONObject;
 import javax.annotation.Nullable;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class FamiModuleHandler {
     private final ArrayList<AModuleHandler> modules = new ArrayList<>();
@@ -144,7 +146,11 @@ public class FamiModuleHandler {
 
                 try {
                     field.setAccessible(true);
-                    field.set(moduleSettings, fieldSettings.get(field.getName()));
+                    Object fieldValue = fieldSettings.get(field.getName());
+                    if(fieldValue.getClass().getName().equalsIgnoreCase("java.math.BigDecimal")){
+                        fieldValue = ((BigDecimal) fieldValue).doubleValue();
+                    }
+                    field.set(moduleSettings, fieldValue);
                 }catch (IllegalAccessException exc){
                     exc.printStackTrace();
                 }

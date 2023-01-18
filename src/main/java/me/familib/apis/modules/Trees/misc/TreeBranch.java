@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 
 public class TreeBranch {
     Random random = new Random();
@@ -82,14 +83,14 @@ public class TreeBranch {
                 newVector.add(Vector.getRandom().multiply(randomnessFactor)).normalize();
             }
 
-                if(chance < settings.branchChance){
+            if(chance < settings.branchChance){
                 children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(Vector.getRandom().multiply(randomnessFactor)).normalize()));
             }
 
-
-            if(chance <= 50){
+            double calculatedChance = settings.randomWayChance * 1.625;
+            if(chance <= calculatedChance && parent != null){
                 if(newVector.getX() > newVector.getZ() && newVector.getX() > newVector.getY()){
-                    if(chance <= 25){
+                    if(chance <= calculatedChance / 2){
                         newVector.setZ(newVector.getZ() * -1);
                     }
                     else{
@@ -98,7 +99,7 @@ public class TreeBranch {
                 }
 
                 if(newVector.getY() > newVector.getZ() && newVector.getY() > newVector.getX()){
-                    if(chance <= 25){
+                    if(chance <= calculatedChance / 2){
                         newVector.setZ(newVector.getZ() * -1);
                     }
                     else{
@@ -107,7 +108,7 @@ public class TreeBranch {
                 }
 
                 if(newVector.getZ() > newVector.getX() && newVector.getZ() > newVector.getY()){
-                    if(chance <= 25){
+                    if(chance <= calculatedChance / 2){
                         newVector.setX(newVector.getX() * -1);
                     }
                     else{
@@ -116,9 +117,14 @@ public class TreeBranch {
                 }
             }
 
+            if(parent == null){
+                System.out.println("Debug - Chance: " + chance);
+                System.out.println("Debug - Needed chance: " + settings.endChance * getNthChild() * settings.endChanceMultiplierByParentNumber);
+            }
             if(chance < settings.endChance * getNthChild() * settings.endChanceMultiplierByParentNumber){
                 isEnded = true;
                 vectors.add(newVector);
+                System.out.println("Branch ended at vector count " + vectors.size());
             }
 
             latestVector = newVector;
@@ -205,10 +211,18 @@ public class TreeBranch {
         return length;
     }
 
+    // Implement the calculated radius math formula to show how the branch would be thick
+    // have to take in mind that it will be much more vectors to calculate so the thread will be more blocked and therefore slower
+    // so maybe implement a setting to change how much vectors will be calculated in the circle, so that it can be decreased /  increased by the customers need
     public void visualize(Location startLoc){
         Iterator<Vector> vectorIterator = vectors.iterator();
         startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
         int index = 0;
+
+        if(this.parent == null){
+            FamiLib.getInstance().getServer().getLogger().log(Level.INFO, "DEBUG - Visualization started");
+            FamiLib.getInstance().getServer().getLogger().log(Level.INFO, "DEBUG - " + vectors.toString());
+        }
 
         do{
             if(!vectorIterator.hasNext())

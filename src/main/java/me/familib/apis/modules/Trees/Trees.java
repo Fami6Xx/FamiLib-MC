@@ -70,17 +70,17 @@ public final class Trees extends AModuleHandler implements Listener {
 
             @Override
             public void run() {
+                iterations++;
+
+                if(end < 0){
+                    cancel();
+                }
+
                 if(!base.next()){
                     event.getPlayer().sendMessage("DEBUG | Ended");
                     base.visualize(startLoc.clone());
                     end--;
                     return;
-                }
-
-                iterations++;
-
-                if(end < 0){
-                    cancel();
                 }
 
                 if(iterations % 10 == 0){
