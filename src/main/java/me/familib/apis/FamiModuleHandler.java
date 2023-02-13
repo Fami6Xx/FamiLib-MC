@@ -73,7 +73,7 @@ public class FamiModuleHandler {
      * Tries to find and enable module
      *
      * @param name Name of module you want to enable
-     * @return true if module was successfully enabled or has already been enabled ,or false if the module can't be initialized or wasn't found
+     * @return True if module was successfully enabled or has already been enabled ,or false if the module can't be initialized or wasn't found
      */
     public boolean tryEnabling(String name){
         Optional<AModuleHandler> optional =
@@ -93,7 +93,7 @@ public class FamiModuleHandler {
      * Tries to find and disable module
      *
      * @param name Name of module you want to disable
-     * @return true if module was successfully disabled or has already been disabled ,or false if module can't be disabled or wasn't found
+     * @return True if module was successfully disabled or has already been disabled ,or false if module can't be disabled or wasn't found
      */
     public boolean tryDisabling(String name){
         Optional<AModuleHandler> optional =
@@ -113,7 +113,7 @@ public class FamiModuleHandler {
      * Finds module you specified
      *
      * @param name Name of module you want to query
-     * @return the module you wanted if it finds one, otherwise null
+     * @return The module you wanted if it finds one, otherwise null
      */
     @Nullable
     public AModuleHandler getModule(String name){
