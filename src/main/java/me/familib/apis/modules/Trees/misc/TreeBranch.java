@@ -91,37 +91,6 @@ public class TreeBranch {
                 state += "Branched, ";
             }
 
-            double calculatedChance = settings.randomWayChance * 1.625;
-            if(chance <= calculatedChance && parent != null){
-                state += "Some Xes rotated by 180 degrees";
-                if(newVector.getX() > newVector.getZ() && newVector.getX() > newVector.getY()){
-                    if(chance <= calculatedChance / 2){
-                        newVector.setZ(newVector.getZ() * -1);
-                    }
-                    else{
-                        newVector.setY(newVector.getY() * -1);
-                    }
-                }
-
-                if(newVector.getY() > newVector.getZ() && newVector.getY() > newVector.getX()){
-                    if(chance <= calculatedChance / 2){
-                        newVector.setZ(newVector.getZ() * -1);
-                    }
-                    else{
-                        newVector.setX(newVector.getX() * -1);
-                    }
-                }
-
-                if(newVector.getZ() > newVector.getX() && newVector.getZ() > newVector.getY()){
-                    if(chance <= calculatedChance / 2){
-                        newVector.setX(newVector.getX() * -1);
-                    }
-                    else{
-                        newVector.setY(newVector.getY() * -1);
-                    }
-                }
-            }
-
             if(parent == null){
                 System.out.println("--");
                 System.out.println("Debug - Chance: " + chance);
@@ -245,18 +214,29 @@ public class TreeBranch {
         return length;
     }
 
+    // Source: https://answers.unity.com/questions/1668856/whats-the-source-code-of-quaternionfromtorotation.html
+    private double[] FromToRotation(Vector from, Vector to){
+        Vector axis = from.crossProduct(to).normalize();
+        float angle = from.angle(to);
+
+        double rad = Math.toRadians(angle * 0.5f);
+        axis.multiply(Math.sin(rad));
+
+        return new double[]{axis.getX(), axis.getY(), axis.getZ(), Math.cos(rad)};
+    }
+
     // Implement the calculated radius math formula to show how the branch would be thick
     // have to take in mind that it will be much more vectors to calculate so the thread will be more blocked and therefore slower
     // so maybe implement a setting to change how much vectors will be calculated in the circle, so that it can be decreased /  increased by the customers need
+
+    // Needed: Vector * Quaternion calculation - ChatGPT
+    // Source: https://ciphrd.com/2019/09/11/generating-a-3d-growing-tree-using-a-space-colonization-algorithm/
+    // Mesh construction a. Static mesh from our branches
     public void visualize(Location startLoc){
         Iterator<Vector> vectorIterator = vectors.iterator();
         startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
-        int index = 0;
 
-        if(this.parent == null){
-            FamiLib.getInstance().getServer().getLogger().log(Level.INFO, "DEBUG - Visualization started");
-            FamiLib.getInstance().getServer().getLogger().log(Level.INFO, "DEBUG - " + vectors.toString());
-        }
+        int index = 0;
 
         do{
             if(!vectorIterator.hasNext())
