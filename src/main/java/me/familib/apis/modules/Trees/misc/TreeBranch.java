@@ -75,20 +75,25 @@ public class TreeBranch {
             Vector newVector = latestVector.clone();
             vectors.add(latestVector);
 
+            String state = "";
+
             int chance = random.nextInt(101);
 
             double randomnessFactor = settings.randomnessFactor;
 
             if(chance < settings.randomWayChance){
-                newVector.add(Vector.getRandom().multiply(randomnessFactor)).normalize();
+                newVector.add(randomVector().multiply(randomnessFactor)).normalize();
+                state += "Random way, ";
             }
 
             if(chance < settings.branchChance){
-                children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(Vector.getRandom().multiply(randomnessFactor)).normalize()));
+                children.put(vectors.size() ,new TreeBranch(vectors.size(), random.nextLong(), this, newVector.clone().add(randomVector().multiply(randomnessFactor)).normalize()));
+                state += "Branched, ";
             }
 
             double calculatedChance = settings.randomWayChance * 1.625;
             if(chance <= calculatedChance && parent != null){
+                state += "Some Xes rotated by 180 degrees";
                 if(newVector.getX() > newVector.getZ() && newVector.getX() > newVector.getY()){
                     if(chance <= calculatedChance / 2){
                         newVector.setZ(newVector.getZ() * -1);
@@ -118,8 +123,13 @@ public class TreeBranch {
             }
 
             if(parent == null){
+                System.out.println("--");
                 System.out.println("Debug - Chance: " + chance);
                 System.out.println("Debug - Needed chance: " + settings.endChance * getNthChild() * settings.endChanceMultiplierByParentNumber);
+                if(state.equals("")) state = "Continue";
+                System.out.println("Debug - " + state);
+                System.out.println("Debug - Current vector: " + latestVector);
+                System.out.println("Debug - New vector: " + newVector);
             }
             if(chance < settings.endChance * getNthChild() * settings.endChanceMultiplierByParentNumber){
                 isEnded = true;
@@ -156,6 +166,30 @@ public class TreeBranch {
         }
 
         return returning;
+    }
+
+    private Vector randomVector(){
+        Vector newVector = new Vector(0,0,0);
+
+        if(random.nextBoolean()){
+            newVector.setX(random.nextDouble() * -1);
+        }else{
+            newVector.setX(random.nextDouble());
+        }
+
+        if(random.nextBoolean()){
+            newVector.setZ(random.nextDouble() * -1);
+        }else{
+            newVector.setZ(random.nextDouble());
+        }
+
+        if(random.nextBoolean()){
+            newVector.setY(random.nextDouble() * -1);
+        }else{
+            newVector.setY(random.nextDouble());
+        }
+
+        return newVector;
     }
 
     public void calculateRadiusForVectors(){
