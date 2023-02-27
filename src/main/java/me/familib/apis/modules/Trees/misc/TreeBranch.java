@@ -264,6 +264,18 @@ public class TreeBranch {
             startLoc.add(vector);
             startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
 
+            Vector to = vectors.get(i + 1);
+            if(to == null){
+                to = vectors.get(i);
+                vector = vectors.get(i-1);
+            }
+
+            double[] QuaternionFromTo = FromToRotation(vector, to);
+
+            for(int j = 0; j < 4; j++){
+
+            }
+
             if(children.containsKey(i)){
                 TreeBranch branch = children.get(i);
                 branch.visualize(startLoc.clone());
