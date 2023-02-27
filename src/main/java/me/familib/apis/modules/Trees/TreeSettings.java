@@ -9,5 +9,4 @@ public class TreeSettings extends ModuleSettings {
     public double endChanceMultiplierByParentNumber = 0.6;
     public double branchChance = 25;
     public double randomWayChance = 45;
-
 }

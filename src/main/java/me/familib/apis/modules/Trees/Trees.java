@@ -78,6 +78,11 @@ public final class Trees extends AModuleHandler implements Listener {
 
                 if(!base.next()){
                     event.getPlayer().sendMessage("DEBUG | Ended");
+
+                    if(end == 50){
+                        base.calculateRadiusForVectors();
+                    }
+
                     base.visualize(startLoc.clone());
                     end--;
                     return;
@@ -85,6 +90,7 @@ public final class Trees extends AModuleHandler implements Listener {
 
                 if(iterations % 10 == 0){
                     event.getPlayer().sendMessage("DEBUG | " + iterations);
+                    base.calculateRadiusForVectors();
                     base.visualize(startLoc.clone());
                 }
             }

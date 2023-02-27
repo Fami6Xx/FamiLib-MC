@@ -225,6 +225,30 @@ public class TreeBranch {
         return new double[]{axis.getX(), axis.getY(), axis.getZ(), Math.cos(rad)};
     }
 
+    private Vector Multiply(Vector value, double[] rotation)
+    {
+        Vector vector = new Vector();
+        double num12 = rotation[0] * 2;
+        double num2 = rotation[1] * 2;
+        double num = rotation[2] * 2;
+        double num11 = rotation[3] * num12;
+        double num10 = rotation[3] * num2;
+        double num9 = rotation[3] * num;
+        double num8 = rotation[0] * num12;
+        double num7 = rotation[0] * num2;
+        double num6 = rotation[0] * num;
+        double num5 = rotation[1] * num2;
+        double num4 = rotation[1] * num;
+        double num3 = rotation[2] * num;
+        double num15 = ((value.getX() * ((1f - num5) - num3)) + (value.getY() * (num7 - num9))) + (value.getZ() * (num6 + num10));
+        double num14 = ((value.getX() * (num7 + num9)) + (value.getY() * ((1f - num8) - num3))) + (value.getZ() * (num4 - num11));
+        double num13 = ((value.getX() * (num6 - num10)) + (value.getY() * (num4 + num11))) + (value.getZ() * ((1f - num8) - num5));
+        vector.setX(num15);
+        vector.setY(num14);
+        vector.setZ(num13);
+        return vector;
+    }
+
     // Implement the calculated radius math formula to show how the branch would be thick
     // have to take in mind that it will be much more vectors to calculate so the thread will be more blocked and therefore slower
     // so maybe implement a setting to change how much vectors will be calculated in the circle, so that it can be decreased /  increased by the customers need
@@ -233,26 +257,17 @@ public class TreeBranch {
     // Source: https://ciphrd.com/2019/09/11/generating-a-3d-growing-tree-using-a-space-colonization-algorithm/
     // Mesh construction a. Static mesh from our branches
     public void visualize(Location startLoc){
-        Iterator<Vector> vectorIterator = vectors.iterator();
         startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
 
-        int index = 0;
-
-        do{
-            if(!vectorIterator.hasNext())
-                return;
-
-            Vector vector = vectorIterator.next();
+        for(int i = 0; i < vectors.size(); i++){
+            Vector vector = vectors.get(i);
             startLoc.add(vector);
             startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
 
-            if(children.containsKey(index)){
-                TreeBranch branch = children.get(index);
+            if(children.containsKey(i)){
+                TreeBranch branch = children.get(i);
                 branch.visualize(startLoc.clone());
             }
-
-            index++;
-        }while(vectorIterator.hasNext());
-
+        }
     }
 }
