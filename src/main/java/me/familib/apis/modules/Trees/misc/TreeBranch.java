@@ -214,46 +214,23 @@ public class TreeBranch {
         return length;
     }
 
-    // Source: https://answers.unity.com/questions/1668856/whats-the-source-code-of-quaternionfromtorotation.html
-    private double[] FromToRotation(Vector from, Vector to){
-        Vector axis = from.crossProduct(to).normalize();
-        float angle = from.angle(to);
-
-        double rad = Math.toRadians(angle * 0.5f);
-        axis.multiply(Math.sin(rad));
-
-        return new double[]{axis.getX(), axis.getY(), axis.getZ(), Math.cos(rad)};
-    }
-
-    private Vector Multiply(Vector value, double[] rotation)
-    {
-        Vector vector = new Vector();
-        double num12 = rotation[0] * 2;
-        double num2 = rotation[1] * 2;
-        double num = rotation[2] * 2;
-        double num11 = rotation[3] * num12;
-        double num10 = rotation[3] * num2;
-        double num9 = rotation[3] * num;
-        double num8 = rotation[0] * num12;
-        double num7 = rotation[0] * num2;
-        double num6 = rotation[0] * num;
-        double num5 = rotation[1] * num2;
-        double num4 = rotation[1] * num;
-        double num3 = rotation[2] * num;
-        double num15 = ((value.getX() * ((1f - num5) - num3)) + (value.getY() * (num7 - num9))) + (value.getZ() * (num6 + num10));
-        double num14 = ((value.getX() * (num7 + num9)) + (value.getY() * ((1f - num8) - num3))) + (value.getZ() * (num4 - num11));
-        double num13 = ((value.getX() * (num6 - num10)) + (value.getY() * (num4 + num11))) + (value.getZ() * ((1f - num8) - num5));
-        vector.setX(num15);
-        vector.setY(num14);
-        vector.setZ(num13);
-        return vector;
+    public ArrayList<Location> getCirclePoints(Location center, Vector direction, double radius, int numPoints) {
+        ArrayList<Location> points = new ArrayList<>();
+        double increment = 2 * Math.PI / numPoints;
+        for (double angle = 0; angle < Math.PI * 2; angle += increment) {
+            double x = Math.cos(angle) * radius;
+            double z = Math.sin(angle) * radius;
+            Vector offset = new Vector(x, 0, z).multiply(direction);
+            Location point = center.clone().add(offset);
+            points.add(point);
+        }
+        return points;
     }
 
     // Implement the calculated radius math formula to show how the branch would be thick
     // have to take in mind that it will be much more vectors to calculate so the thread will be more blocked and therefore slower
     // so maybe implement a setting to change how much vectors will be calculated in the circle, so that it can be decreased /  increased by the customers need
 
-    // Needed: Vector * Quaternion calculation - ChatGPT
     // Source: https://ciphrd.com/2019/09/11/generating-a-3d-growing-tree-using-a-space-colonization-algorithm/
     // Mesh construction a. Static mesh from our branches
     public void visualize(Location startLoc){
@@ -264,17 +241,7 @@ public class TreeBranch {
             startLoc.add(vector);
             startLoc.getWorld().spawnParticle(Particle.REDSTONE, startLoc, 1);
 
-            Vector to = vectors.get(i + 1);
-            if(to == null){
-                to = vectors.get(i);
-                vector = vectors.get(i-1);
-            }
-
-            double[] QuaternionFromTo = FromToRotation(vector, to);
-
-            for(int j = 0; j < 4; j++){
-
-            }
+            getCirclePoints(startLoc, vector, radii.get(i), 4).forEach(location -> location.getWorld().spawnParticle(Particle.REDSTONE, location, 1));
 
             if(children.containsKey(i)){
                 TreeBranch branch = children.get(i);
