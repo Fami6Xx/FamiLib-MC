@@ -1,19 +1,18 @@
 package me.familib.apis.modules.Trees.misc;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import me.familib.FamiLib;
 import me.familib.apis.modules.Trees.TreeSettings;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 
 public class TreeBranch {
     Random random = new Random();
@@ -226,36 +225,31 @@ public class TreeBranch {
         return length;
     }
 
-    public ArrayList<Location> getCirclePoints(Location center, Vector direction, double radius, int numPoints) {
-        ArrayList<Location> points = new ArrayList<>();
-        Vector up = new Vector(0, 1, 0);
+    public List<Location> calculateCirclePoints(Location center, Vector direction, double radius, int numPoints) {
+        List<Location> points = new ArrayList<>();
+        World world = center.getWorld();
 
-        double angleY = -Math.atan2(direction.getY(), Math.sqrt(direction.getX() * direction.getX() + direction.getZ() * direction.getZ()));
-        Vector directionY = rotateAroundAxis(direction.clone(), up, angleY);
+        // Normalize the direction vector
+        Vector normDirection = direction.normalize();
 
-        double angle = 2 * Math.PI / numPoints;
+        // Calculate two perpendicular vectors to the direction vector
+        Vector v1 = new Vector(-normDirection.getZ(), 0, normDirection.getX());
+        Vector v2 = normDirection.getCrossProduct(v1);
 
+        // Calculate the points on the circle
         for (int i = 0; i < numPoints; i++) {
-            Vector rotatedDirection = rotateAroundAxis(directionY.clone(), up, angle * i);
-            Vector finalDirection = rotateAroundAxis(rotatedDirection.clone(), directionY.clone(), Math.toRadians(center.getYaw()) + Math.PI / 2);
-            Vector pointOffset = finalDirection.clone().multiply(radius);
-            Location point = center.clone().add(pointOffset);
-            points.add(point);
+            double angle = 2 * Math.PI / numPoints * i;
+
+            // Calculate the point on the circle
+            Vector point = center.toVector().add(
+                    v1.multiply(radius * Math.cos(angle)).add(
+                            v2.multiply(radius * Math.sin(angle))));
+
+            // Add the point to the list
+            points.add(point.toLocation(world));
         }
 
         return points;
-    }
-
-    public Vector rotateAroundAxis(Vector vector, Vector axis, double angle) {
-        double cosTheta = Math.cos(angle);
-        double sinTheta = Math.sin(angle);
-        double dotProduct = vector.dot(axis);
-
-        double x = axis.getX() * dotProduct * (1 - cosTheta) + vector.getX() * cosTheta + (-axis.getZ() * vector.getY() + axis.getY() * vector.getZ()) * sinTheta;
-        double y = axis.getY() * dotProduct * (1 - cosTheta) + vector.getY() * cosTheta + (axis.getZ() * vector.getX() - axis.getX() * vector.getZ()) * sinTheta;
-        double z = axis.getZ() * dotProduct * (1 - cosTheta) + vector.getZ() * cosTheta + (-axis.getY() * vector.getX() + axis.getX() * vector.getY()) * sinTheta;
-
-        return new Vector(x, y, z);
     }
 
     // Implement the calculated radius math formula to show how the branch would be thick
@@ -272,7 +266,7 @@ public class TreeBranch {
             startLoc.add(vector);
             spawnParticle(startLoc, branchColor);
 
-            getCirclePoints(startLoc, vector, radii.get(i), 16).forEach(location -> spawnParticle(location, branchColor));
+            calculateCirclePoints(startLoc, vector, radii.get(i), 16).forEach(location -> spawnParticle(location, branchColor));
 
             if(children.containsKey(i)){
                 TreeBranch branch = children.get(i);
